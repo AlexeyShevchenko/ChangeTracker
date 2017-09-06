@@ -3,12 +3,15 @@
     using Sitecore;
     using Sitecore.Configuration;
     using Sitecore.Data;
+    using Sitecore.Data.Fields;
     using Sitecore.Data.Items;
     using Sitecore.Install;
     using Sitecore.Install.Framework;
     using Sitecore.Install.Items;
     using Sitecore.Install.Zip;
     using Sitecore.Shell.Framework.Commands;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class GenerateZip : Command
     {
@@ -20,7 +23,19 @@
 
             var masterDatabase = Factory.GetDatabase("master");
             var query = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @@templateid != '{2}']", taskStartTime, taskEndTime, ChangeTracker.Constants.Templates.Task.ID);
-            var items = masterDatabase.SelectItems(query);
+            IEnumerable<Item> items = masterDatabase.SelectItems(query);
+
+            MultilistField excludedItemsField = new MultilistField(lastFinishedTask.Fields[ChangeTracker.Constants.Templates.Task.Fields.ExcludedItems]);
+            if (excludedItemsField.TargetIDs.Any())
+            {
+                var withoutExcludedItems = new List<Item>();
+                foreach (var item in items)
+                {
+                    if (excludedItemsField.TargetIDs.Contains(item.ID)) { continue; }
+                    withoutExcludedItems.Add(item);
+                }
+                items = withoutExcludedItems;
+            }
 
             this.GeneratePackage(items, lastFinishedTask.Name);
         }
@@ -34,7 +49,7 @@
             return CommandState.Hidden;
         }
 
-        private void GeneratePackage(Item[] items, string packageName)
+        private void GeneratePackage(IEnumerable<Item> items, string packageName)
         {
             var packageProject = new PackageProject
             {
