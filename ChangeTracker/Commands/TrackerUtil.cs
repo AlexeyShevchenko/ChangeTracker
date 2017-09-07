@@ -1,7 +1,6 @@
 ﻿namespace ChangeTracker.Commands
 {
     using Sitecore.Configuration;
-    using Sitecore.Data;
     using Sitecore.Data.Fields;
     using Sitecore.Data.Items;
     using System.Linq;
@@ -23,7 +22,10 @@
         {
             get
             {
-                var currentTaskItem = TasksFolder.Children.FirstOrDefault(taskItem => string.IsNullOrEmpty(taskItem[Constants.Templates.Task.Fields.TaskEndDate]));
+                var currentTaskItem = TasksFolder.Children
+                    .FirstOrDefault(taskItem =>
+                        string.IsNullOrEmpty(taskItem[Constants.Templates.Task.Fields.TaskEndDate])
+                        && taskItem.Statistics.CreatedBy == Sitecore.Context.User.Name);
                 return currentTaskItem;
             }
         }
@@ -48,7 +50,9 @@
         {
             get
             {
-                var lastFinishedTaskItem = TasksFolder.Children.OrderByDescending(taskItem => taskItem.Statistics.Created).FirstOrDefault();
+                var lastFinishedTaskItem = TasksFolder.Children
+                    .Where(taskItem => taskItem.Statistics.CreatedBy == Sitecore.Context.User.Name)
+                    .OrderByDescending(taskItem => taskItem.Statistics.Created).FirstOrDefault();
                 return lastFinishedTaskItem;
             }
         }
