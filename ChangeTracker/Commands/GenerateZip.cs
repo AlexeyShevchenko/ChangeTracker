@@ -20,9 +20,14 @@
             var lastFinishedTask = TrackerUtil.LastFinishedTaskItem;
             var taskStartTime = lastFinishedTask[FieldIDs.Created];
             var taskEndTime = lastFinishedTask[ChangeTracker.Constants.Templates.Task.Fields.TaskEndDate];
+            var taskImplementer = lastFinishedTask[FieldIDs.CreatedBy];
 
             var masterDatabase = Factory.GetDatabase("master");
-            var query = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @@templateid != '{2}']", taskStartTime, taskEndTime, ChangeTracker.Constants.Templates.Task.ID);
+            var query = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}' and @@templateid != '{3}']",
+                taskStartTime,
+                taskEndTime,
+                taskImplementer,
+                ChangeTracker.Constants.Templates.Task.ID);
             IEnumerable<Item> items = masterDatabase.SelectItems(query);
 
             MultilistField excludedItemsField = new MultilistField(lastFinishedTask.Fields[ChangeTracker.Constants.Templates.Task.Fields.ExcludedItems]);
