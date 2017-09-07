@@ -12,10 +12,6 @@
             currentTask[ChangeTracker.Constants.Templates.Task.Fields.TaskEndDate] = DateUtil.ToIsoDate(System.DateTime.Now);
             currentTask.Editing.EndEdit();
 
-            //var currentItem = context.Items[0];
-            //var load = string.Concat(new object[] { "item:load(id=", currentItem.ID, ",language=", currentItem.Language, ",version=", currentItem.Version, ")" });
-            //Context.ClientPage.SendMessage(this, load);
-
             TrackerUtil.ReloadRibbon(context.Items[0], this);
         }
 

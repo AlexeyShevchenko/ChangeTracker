@@ -1,7 +1,6 @@
 ﻿namespace ChangeTracker.Pipelines
 {
     using Sitecore.Configuration;
-    using Sitecore.Data;
     using Sitecore.Diagnostics;
     using Sitecore.Web.UI.Sheer;
 
@@ -30,13 +29,6 @@
                 var tasksFolder = masterDatabase.GetItem(Constants.TasksFolder);
                 var taskName = args.Result;
                 tasksFolder.Add(taskName, Constants.Templates.Task.ID);
-
-                //var currentItemUri = new ItemUri(args.Parameters["currentItemUri"]);
-                //var currentDataUri = new DataUri(currentItemUri);
-                //var currentItem = masterDatabase.GetItem(currentDataUri);
-
-                //var load = string.Concat(new object[] { "item:load(id=", currentItem.ID, ",language=", currentItem.Language, ",version=", currentItem.Version, ")" });
-                //Sitecore.Context.ClientPage.SendMessage(this, load);                
             }
             else
             {
