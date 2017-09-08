@@ -11,6 +11,7 @@
     using Sitecore.Install.Items;
     using Sitecore.Install.Zip;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     public class SaveZipInFileSystem
@@ -82,7 +83,7 @@
 
             if (packageItemSource.Entries.Count > 0 || sourceCollection.Sources.Count > 0) { packageProject.Sources.Add(sourceCollection); }
 
-            var packagesFolder = Settings.GetSetting("ChangeTracker.PackagesFolder");
+            var packagesFolder = Path.GetTempPath();            
             var pathToPackage = string.Format("{0}\\{1}.zip", packagesFolder, packageName);
 
             this.Args.FilePath = pathToPackage;

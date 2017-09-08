@@ -65,7 +65,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\ChangeTracker\ChangeTracker.Settings.config" />
     <None Include="App_Config\Include\ChangeTracker\ChangeTracker.Pipelines.config" />
     <None Include="App_Config\Include\ChangeTracker\ChangeTracker.Processors.config" />
     <None Include="App_Config\Include\ChangeTracker\ChangeTracker.Commands.config" />
