@@ -7,7 +7,7 @@
         public override void Execute(CommandContext context)
         {
             var nameValueCollection = new System.Collections.Specialized.NameValueCollection();
-            Sitecore.Context.ClientPage.Start("changeTracker", nameValueCollection);
+            Sitecore.Context.ClientPage.Start("createTaskItem", nameValueCollection);
         }
 
         public override CommandState QueryState(CommandContext context)

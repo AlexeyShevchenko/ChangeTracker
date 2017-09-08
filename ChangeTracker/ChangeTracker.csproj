@@ -56,8 +56,12 @@
     <Compile Include="Commands\TrackerUtil.cs" />
     <Compile Include="Commands\StartTask.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Pipelines\CreateTaskItem.cs" />
-    <Compile Include="Pipelines\ItemIsInExcludeList.cs" />
+    <Compile Include="Pipelines\CreatePackage\AssingZipMediaItemToTaskItem.cs" />
+    <Compile Include="Pipelines\CreatePackage\GenerateZipArgs.cs" />
+    <Compile Include="Pipelines\CreatePackage\SaveZipInFileSystem.cs" />
+    <Compile Include="Pipelines\CreatePackage\SaveZipInMedia.cs" />
+    <Compile Include="Pipelines\CreateTaskItem\CreateTaskItem.cs" />
+    <Compile Include="Pipelines\GetContentEditorWarnings\ItemIsInExcludeList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

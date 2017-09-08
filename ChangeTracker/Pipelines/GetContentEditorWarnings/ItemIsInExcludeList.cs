@@ -1,4 +1,4 @@
-﻿namespace ChangeTracker.Pipelines
+﻿namespace ChangeTracker.Pipelines.GetContentEditorWarnings
 {
     using Commands;
     using Sitecore.Pipelines.GetContentEditorWarnings;

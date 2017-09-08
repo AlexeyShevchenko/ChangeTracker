@@ -17,6 +17,8 @@
                     public static ID TaskEndDate = new ID("{EAE9D83F-0CAD-4594-8BF2-A152A1D6F897}");
 
                     public static ID ExcludedItems = new ID("{7225D34B-D69B-494D-B615-063FB271EC8C}");
+
+                    public static ID Package = new ID("{073E276F-358C-4A7F-8531-C6C4C9FD342A}");
                 }
             }
         }

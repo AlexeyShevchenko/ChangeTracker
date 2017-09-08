@@ -1,4 +1,4 @@
-﻿namespace ChangeTracker.Pipelines
+﻿namespace ChangeTracker.Pipelines.CreateTaskItem
 {
     using Sitecore.Configuration;
     using Sitecore.Diagnostics;
