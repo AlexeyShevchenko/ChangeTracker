@@ -1,4 +1,4 @@
-﻿namespace ChangeTracker.Pipelines.GetContentEditorWarnings
+﻿namespace ChangeTracker.Pipelines.ShowChangeTrackerWarnings
 {
     using Commands;
     using Sitecore.Pipelines.GetContentEditorWarnings;
@@ -7,8 +7,7 @@
     {
         public void Process(GetContentEditorWarningsArgs args)
         {
-            var item = args.Item;
-            if (item == null)
+            if (args.Item == null)
             {
                 return;
             }
@@ -18,7 +17,7 @@
                 return;
             }
 
-            if (TrackerUtil.IsItemInExcludedList(item))
+            if (TrackerUtil.IsItemInExcludedList(args.Item))
             {
                 foreach (var warning in args.Warnings) { warning.IsExclusive = false; }
 

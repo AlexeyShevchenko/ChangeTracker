@@ -6,6 +6,8 @@
     {
         public static ID TasksFolder = new ID("{C382857C-A13A-46C9-9404-C2E3483892BE}");
 
+        public static ID ChangeTrackerMediaFolder = new ID("{584099B0-D510-4137-966C-5376A558EF19}");
+
         public static class Templates
         {
             public static class Task

@@ -61,7 +61,7 @@
     <Compile Include="Pipelines\CreatePackage\SaveZipInFileSystem.cs" />
     <Compile Include="Pipelines\CreatePackage\SaveZipInMedia.cs" />
     <Compile Include="Pipelines\CreateTaskItem\CreateTaskItem.cs" />
-    <Compile Include="Pipelines\GetContentEditorWarnings\ItemIsInExcludeList.cs" />
+    <Compile Include="Pipelines\ShowChangeTrackerWarnings\ItemIsInExcludeList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

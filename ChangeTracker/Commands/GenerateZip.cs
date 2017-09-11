@@ -8,7 +8,12 @@
     {
         public override void Execute(CommandContext context)
         {
-            var args = new GenerateZipArgs();
+            var lastFinishedTaskItem = TrackerUtil.LastFinishedTaskItem;
+            var args = new GenerateZipArgs
+            {
+                LastFinishedTaskItem = lastFinishedTaskItem,
+                MediaItemName = lastFinishedTaskItem.Name
+            };
             CorePipeline.Run("createPackage", args);
         }
 

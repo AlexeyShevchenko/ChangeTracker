@@ -1,7 +1,6 @@
 ﻿namespace ChangeTracker.Pipelines.CreatePackage
 {
     using Sitecore.Configuration;
-    using Sitecore.Data;
     using Sitecore.Data.Items;
     using Sitecore.Diagnostics;
     using Sitecore.Resources.Media;
@@ -11,13 +10,15 @@
         public void Process(GenerateZipArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
+            Assert.ArgumentNotNullOrEmpty(args.MediaItemName, "args.MediaItemName");
+            Assert.ArgumentNotNullOrEmpty(args.FilePath, "args.FilePath");
 
-            args.ZipMediaItem = AddFile(args.FilePath, args.MediaItemName);
+            args.ZipMediaItem = AddFile(args.MediaItemName, args.FilePath);
         }
 
-        public MediaItem AddFile(string filePath, string mediaItemName)
+        public MediaItem AddFile(string mediaItemName, string filePath)
         {
-            var mediaFolder = Factory.GetDatabase("master").GetItem(new ID("{584099B0-D510-4137-966C-5376A558EF19}"));
+            var mediaFolder = Factory.GetDatabase("master").GetItem(Constants.ChangeTrackerMediaFolder);
             var path = mediaFolder.Paths.FullPath;
             var options = new MediaCreatorOptions
             {

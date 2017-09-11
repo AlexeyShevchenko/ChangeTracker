@@ -5,6 +5,8 @@
 
     public class GenerateZipArgs : PipelineArgs
     {
+        public Item LastFinishedTaskItem { get; set; }
+
         public string FilePath { get; set; }
 
         public string MediaItemName { get; set; }
