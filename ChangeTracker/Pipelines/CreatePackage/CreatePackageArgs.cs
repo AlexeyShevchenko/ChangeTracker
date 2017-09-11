@@ -2,10 +2,13 @@
 {
     using Sitecore.Data.Items;
     using Sitecore.Pipelines;
+    using System.Collections.Generic;
 
-    public class GenerateZipArgs : PipelineArgs
+    public class CreatePackageArgs : PipelineArgs
     {
         public Item LastFinishedTaskItem { get; set; }
+
+        public IEnumerable<Item> ItemsForPackage { get; set; }
 
         public string FilePath { get; set; }
 

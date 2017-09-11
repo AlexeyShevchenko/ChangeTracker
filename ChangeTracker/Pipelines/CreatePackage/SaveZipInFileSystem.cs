@@ -1,72 +1,33 @@
 ﻿namespace ChangeTracker.Pipelines.CreatePackage
 {
     using Sitecore;
-    using Sitecore.Configuration;
     using Sitecore.Data;
-    using Sitecore.Data.Fields;
-    using Sitecore.Data.Items;
     using Sitecore.Diagnostics;
     using Sitecore.Install;
     using Sitecore.Install.Framework;
     using Sitecore.Install.Items;
     using Sitecore.Install.Zip;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
     public class SaveZipInFileSystem
     {
-        private GenerateZipArgs Args { get; set; }
+        private CreatePackageArgs Args { get; set; }
 
-        public void Process(GenerateZipArgs args)
+        public void Process(CreatePackageArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
             Assert.ArgumentNotNull(args.LastFinishedTaskItem, "args.LastFinishedTaskItem");
+            Assert.ArgumentNotNull(args.ItemsForPackage, "args.ItemsForPackage");
+
+            if (!args.ItemsForPackage.Any()) { args.AbortPipeline(); }
 
             Args = args;
-            var items = GetItemForPackage();
-            GeneratePackage(items);
+
+            GeneratePackage();
         }
 
-        private IEnumerable<Item> GetItemForPackage()
-        {
-            var taskStartTime = Args.LastFinishedTaskItem[FieldIDs.Created];
-            var taskEndTime = Args.LastFinishedTaskItem[ChangeTracker.Constants.Templates.Task.Fields.TaskEndDate];
-            var taskImplementer = Args.LastFinishedTaskItem[FieldIDs.CreatedBy];
-
-            var masterDatabase = Factory.GetDatabase("master");
-            var query = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}' and @@templateid != '{3}']",
-                taskStartTime,
-                taskEndTime,
-                taskImplementer,
-                ChangeTracker.Constants.Templates.Task.ID);
-            IEnumerable<Item> masterItems = masterDatabase.SelectItems(query);
-                        
-            var coreDatabase = Factory.GetDatabase("core");
-            var coreQuery = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}']",
-                taskStartTime,
-                taskEndTime,
-                taskImplementer);
-            IEnumerable<Item> coreItems = coreDatabase.SelectItems(coreQuery);
-
-            var res = masterItems.Concat(coreItems);
-
-            MultilistField excludedItemsField = new MultilistField(Args.LastFinishedTaskItem.Fields[ChangeTracker.Constants.Templates.Task.Fields.ExcludedItems]);
-            if (excludedItemsField.TargetIDs.Any())
-            {
-                var withoutExcludedItems = new List<Item>();
-                foreach (var item in res)
-                {
-                    if (excludedItemsField.TargetIDs.Contains(item.ID)) { continue; }
-                    withoutExcludedItems.Add(item);
-                }
-                res = withoutExcludedItems;
-            }
-
-            return res;
-        }
-
-        private void GeneratePackage(IEnumerable<Item> items)
+        private void GeneratePackage()
         {
             var packageProject = new PackageProject
             {
@@ -81,7 +42,7 @@
             };
 
             var packageItemSource = new ExplicitItemSource();
-            foreach (var item in items)
+            foreach (var item in Args.ItemsForPackage)
             {
                 var itemUri = new ItemUri(item);
                 packageItemSource.Entries.Add(new ItemReference(itemUri, false).ToString());

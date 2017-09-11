@@ -57,7 +57,8 @@
     <Compile Include="Commands\StartTask.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Pipelines\CreatePackage\AssingZipMediaItemToTaskItem.cs" />
-    <Compile Include="Pipelines\CreatePackage\GenerateZipArgs.cs" />
+    <Compile Include="Pipelines\CreatePackage\CreatePackageArgs.cs" />
+    <Compile Include="Pipelines\CreatePackage\GetItemsForPackage.cs" />
     <Compile Include="Pipelines\CreatePackage\SaveZipInFileSystem.cs" />
     <Compile Include="Pipelines\CreatePackage\SaveZipInMedia.cs" />
     <Compile Include="Pipelines\CreateTaskItem\CreateTaskItem.cs" />

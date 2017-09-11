@@ -9,7 +9,7 @@
         public override void Execute(CommandContext context)
         {
             var lastFinishedTaskItem = TrackerUtil.LastFinishedTaskItem;
-            var args = new GenerateZipArgs
+            var args = new CreatePackageArgs
             {
                 LastFinishedTaskItem = lastFinishedTaskItem,
                 MediaItemName = lastFinishedTaskItem.Name

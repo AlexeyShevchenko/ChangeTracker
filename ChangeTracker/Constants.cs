@@ -20,6 +20,8 @@
 
                     public static ID ExcludedItems = new ID("{7225D34B-D69B-494D-B615-063FB271EC8C}");
 
+                    public static ID IncludedItems = new ID("{5048B458-FD8B-4609-94CE-22C6F017181A}");
+
                     public static ID Package = new ID("{073E276F-358C-4A7F-8531-C6C4C9FD342A}");
                 }
             }

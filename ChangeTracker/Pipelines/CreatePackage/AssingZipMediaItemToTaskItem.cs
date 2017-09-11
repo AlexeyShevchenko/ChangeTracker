@@ -4,7 +4,7 @@
 
     public class AssingZipMediaItemToTaskItem
     {
-        public void Process(GenerateZipArgs args)
+        public void Process(CreatePackageArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
             Assert.ArgumentNotNull(args.LastFinishedTaskItem, "args.LastFinishedTaskItem");

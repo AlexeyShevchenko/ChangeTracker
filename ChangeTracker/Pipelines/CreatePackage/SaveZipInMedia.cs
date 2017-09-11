@@ -7,7 +7,7 @@
 
     public class SaveZipInMedia
     {
-        public void Process(GenerateZipArgs args)
+        public void Process(CreatePackageArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
             Assert.ArgumentNotNullOrEmpty(args.MediaItemName, "args.MediaItemName");
