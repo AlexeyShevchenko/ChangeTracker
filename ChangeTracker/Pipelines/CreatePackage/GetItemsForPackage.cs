@@ -27,14 +27,12 @@
                 ChangeTracker.Constants.ChangeTrackerMediaFolder,
                 ChangeTracker.Constants.Templates.Task.ID);
             IEnumerable<Item> masterItems = masterDatabase.SelectItems(masterQuery);
-
             var coreDatabase = Factory.GetDatabase("core");
             var coreQuery = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}']",
                 taskStartTime,
                 taskEndTime,
                 taskImplementer);
             IEnumerable<Item> coreItems = coreDatabase.SelectItems(coreQuery);
-
             var itemsForPackage = masterItems.Concat(coreItems);
 
             MultilistField excludedItemsField = new MultilistField(args.LastFinishedTaskItem.Fields[ChangeTracker.Constants.Templates.Task.Fields.ExcludedItems]);
