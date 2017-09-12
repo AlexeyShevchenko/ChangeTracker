@@ -18,7 +18,8 @@
 
         public MediaItem AddFile(string mediaItemName, string filePath)
         {
-            var mediaFolder = Factory.GetDatabase("master").GetItem(Constants.ChangeTrackerMediaFolder);
+            var masterDatabase = Factory.GetDatabase("master");
+            var mediaFolder = masterDatabase.GetItem(Constants.ChangeTrackerMediaFolder);
             var path = mediaFolder.Paths.FullPath;
             var options = new MediaCreatorOptions
             {
@@ -27,7 +28,7 @@
                 OverwriteExisting = false,
                 Versioned = false,
                 Destination = string.Format("{0}/{1}", path, mediaItemName),
-                Database = Factory.GetDatabase("master")
+                Database = masterDatabase
             };
 
             var creator = new MediaCreator();

@@ -1,4 +1,4 @@
-﻿namespace ChangeTracker.Commands
+﻿namespace ChangeTracker
 {
     using Sitecore.Configuration;
     using Sitecore.Data.Fields;

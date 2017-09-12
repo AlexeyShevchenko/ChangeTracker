@@ -53,7 +53,7 @@
     <Compile Include="Commands\AddItemToExcludeList.cs" />
     <Compile Include="Commands\GenerateZip.cs" />
     <Compile Include="Commands\RemoveItemFromExcludeList.cs" />
-    <Compile Include="Commands\TrackerUtil.cs" />
+    <Compile Include="TrackerUtil.cs" />
     <Compile Include="Commands\StartTask.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Pipelines\CreatePackage\AssingZipMediaItemToTaskItem.cs" />
