@@ -52,6 +52,7 @@
     <Compile Include="Commands\EndTask.cs" />
     <Compile Include="Commands\AddItemToExcludeList.cs" />
     <Compile Include="Commands\GenerateZip.cs" />
+    <Compile Include="Commands\Publish.cs" />
     <Compile Include="Commands\RemoveItemFromExcludeList.cs" />
     <Compile Include="TrackerUtil.cs" />
     <Compile Include="Commands\StartTask.cs" />

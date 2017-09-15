@@ -25,7 +25,7 @@
                 var currentTaskItem = TasksFolder.Children
                     .FirstOrDefault(taskItem =>
                         string.IsNullOrEmpty(taskItem[Constants.Templates.Task.Fields.TaskEndDate])
-                        && taskItem.Statistics.CreatedBy == Sitecore.Context.User.Name);
+                        && taskItem[Sitecore.FieldIDs.CreatedBy] == Sitecore.Context.User.Name);
                 return currentTaskItem;
             }
         }
@@ -51,8 +51,8 @@
             get
             {
                 var lastFinishedTaskItem = TasksFolder.Children
-                    .Where(taskItem => taskItem.Statistics.CreatedBy == Sitecore.Context.User.Name)
-                    .OrderByDescending(taskItem => taskItem.Statistics.Created).FirstOrDefault();
+                    .Where(taskItem => taskItem[Sitecore.FieldIDs.CreatedBy] == Sitecore.Context.User.Name)
+                    .OrderByDescending(taskItem => taskItem[Sitecore.FieldIDs.Created]).FirstOrDefault();
                 return lastFinishedTaskItem;
             }
         }

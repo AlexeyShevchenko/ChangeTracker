@@ -21,6 +21,8 @@
                     public static ID ExcludedItems = new ID("{7225D34B-D69B-494D-B615-063FB271EC8C}");
 
                     public static ID Package = new ID("{073E276F-358C-4A7F-8531-C6C4C9FD342A}");
+
+                    public static ID PublishTargets = new ID("{3A3CA28C-C727-420D-A52F-40B941290812}");
                 }
             }
         }
