@@ -19,20 +19,22 @@
             var taskEndTime = args.LastFinishedTaskItem[ChangeTracker.Constants.Templates.Task.Fields.TaskEndDate];
             var taskImplementer = args.LastFinishedTaskItem[FieldIDs.CreatedBy];
 
+            Assert.ArgumentNotNullOrEmpty(taskStartTime, "taskStartTime");
+            Assert.ArgumentNotNullOrEmpty(taskEndTime, "taskEndTime");
+            Assert.ArgumentNotNullOrEmpty(taskImplementer, "taskImplementer");
+
             var masterDatabase = Factory.GetDatabase("master");
-            var masterQuery = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}' and @@parentid != '{3}' and @@templateid != '{4}']",
-                taskStartTime,
-                taskEndTime,
-                taskImplementer,
-                ChangeTracker.Constants.ChangeTrackerMediaFolder,
-                ChangeTracker.Constants.Templates.Task.ID);
-            IEnumerable<Item> masterItems = masterDatabase.SelectItems(masterQuery);
+            Assert.ArgumentNotNull(masterDatabase, "masterDatabase");
+
+            var masterQuery = QueryBuilder.BuildQueryForMasterDatabase(taskStartTime, taskEndTime, taskImplementer);
+            var masterItems = TrackerUtil.FetchAffectedItems(masterDatabase, masterQuery);
+
             var coreDatabase = Factory.GetDatabase("core");
-            var coreQuery = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}']",
-                taskStartTime,
-                taskEndTime,
-                taskImplementer);
-            IEnumerable<Item> coreItems = coreDatabase.SelectItems(coreQuery);
+            Assert.ArgumentNotNull(coreDatabase, "coreDatabase");
+
+            var coreQuery = QueryBuilder.BuildQueryForCoreDatabase(taskStartTime, taskEndTime, taskImplementer);
+            var coreItems = TrackerUtil.FetchAffectedItems(coreDatabase, coreQuery);
+
             var itemsForPackage = masterItems.Concat(coreItems);
 
             MultilistField excludedItemsField = new MultilistField(args.LastFinishedTaskItem.Fields[ChangeTracker.Constants.Templates.Task.Fields.ExcludedItems]);

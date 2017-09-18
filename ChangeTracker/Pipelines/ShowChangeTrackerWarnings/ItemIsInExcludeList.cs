@@ -1,6 +1,5 @@
 ﻿namespace ChangeTracker.Pipelines.ShowChangeTrackerWarnings
 {
-    using Commands;
     using Sitecore.Pipelines.GetContentEditorWarnings;
 
     public class ItemIsInExcludeList
@@ -12,7 +11,7 @@
                 return;
             }
 
-            if (!TrackerUtil.IsCurrentTaskInProcess)
+            if (!Context.IsCurrentTaskInProcess)
             {
                 return;
             }

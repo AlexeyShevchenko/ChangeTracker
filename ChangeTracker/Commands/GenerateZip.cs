@@ -8,7 +8,7 @@
     {
         public override void Execute(CommandContext context)
         {
-            var lastFinishedTaskItem = TrackerUtil.LastFinishedTaskItem;
+            var lastFinishedTaskItem = Context.LastFinishedTaskItem;
             var args = new CreatePackageArgs
             {
                 LastFinishedTaskItem = lastFinishedTaskItem,
@@ -19,7 +19,7 @@
 
         public override CommandState QueryState(CommandContext context)
         {
-            if (TrackerUtil.LastFinishedTaskItem != null && !TrackerUtil.IsCurrentTaskInProcess)
+            if (Context.LastFinishedTaskItem != null && !Context.IsCurrentTaskInProcess)
             {
                 return CommandState.Enabled;
             }

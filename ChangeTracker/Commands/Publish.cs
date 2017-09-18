@@ -14,7 +14,7 @@
     {
         public override void Execute(CommandContext context)
         {
-            var lastFinishedTaskItem = TrackerUtil.LastFinishedTaskItem;
+            var lastFinishedTaskItem = Context.LastFinishedTaskItem;
             Assert.ArgumentNotNull(lastFinishedTaskItem, "lastFinishedTaskItem");
 
             MultilistField publishTargetsField = lastFinishedTaskItem.Fields[Constants.Templates.Task.Fields.PublishTargets];
@@ -24,18 +24,17 @@
             var taskEndTime = lastFinishedTaskItem[Constants.Templates.Task.Fields.TaskEndDate];
             var taskImplementer = lastFinishedTaskItem[Sitecore.FieldIDs.CreatedBy];
 
+            Assert.ArgumentNotNullOrEmpty(taskStartTime, "taskStartTime");
+            Assert.ArgumentNotNullOrEmpty(taskEndTime, "taskEndTime");
+            Assert.ArgumentNotNullOrEmpty(taskImplementer, "taskImplementer");
+
             var masterDatabase = Factory.GetDatabase("master");
             Assert.ArgumentNotNull(masterDatabase, "masterDatabase");
 
-            var masterQuery = string.Format("fast:/sitecore//*[@__Updated > '{0}' and @__Updated < '{1}' and @__Updated by = '{2}' and @@parentid != '{3}' and @@templateid != '{4}']",
-                taskStartTime,
-                taskEndTime,
-                taskImplementer,
-                Constants.ChangeTrackerMediaFolder,
-                Constants.Templates.Task.ID);
-            IEnumerable<Item> itemsToPublish = masterDatabase
-                .SelectItems(masterQuery)
-                .OrderBy(item => item[Sitecore.FieldIDs.Created]);
+            var masterQuery = QueryBuilder.BuildQueryForMasterDatabase(taskStartTime, taskEndTime, taskImplementer);
+            var itemsToPublish = TrackerUtil.FetchAffectedItems(masterDatabase, masterQuery)
+                .OrderBy(item => item[Sitecore.FieldIDs.Created])
+                .AsEnumerable();
 
             MultilistField excludedItemsField = new MultilistField(lastFinishedTaskItem.Fields[Constants.Templates.Task.Fields.ExcludedItems]);
             if (excludedItemsField.TargetIDs.Any())
@@ -59,7 +58,7 @@
 
         public override CommandState QueryState(CommandContext context)
         {
-            if (TrackerUtil.LastFinishedTaskItem != null && !TrackerUtil.IsCurrentTaskInProcess)
+            if (Context.LastFinishedTaskItem != null && !Context.IsCurrentTaskInProcess)
             {
                 return CommandState.Enabled;
             }

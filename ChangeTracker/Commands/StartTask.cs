@@ -13,7 +13,7 @@
 
         public override CommandState QueryState(CommandContext context)
         {
-            return TrackerUtil.IsCurrentTaskInProcess ? CommandState.Hidden : CommandState.Enabled;
+            return Context.IsCurrentTaskInProcess ? CommandState.Hidden : CommandState.Enabled;
         }
     }
 }
